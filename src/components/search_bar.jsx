@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SearchBar extends Component {
-  handleChange = event => this.props.searchFunction(event.target.value);
-
-  handleFocus = () => this.props.focusFunction();
-
-  render() {
-    return (
-      <input
-        type="text"
-        className="form-control form-search"
-        onChange={this.handleChange}
-        onFocus={this.handleFocus}
-        onBlur={this.handleFocus}
-      />
-    );
-  }
-}
+const SearchBar = ({ searchFunction, focusFunction }) => {
+  const handleChange = event => searchFunction(event.target.value);
+  const handleFocus = () => focusFunction();
+  return (
+    <input
+      type="text"
+      className="form-control form-search"
+      onChange={handleChange}
+      onFocus={handleFocus}
+      onBlur={handleFocus}
+    />
+  );
+};
 
 export default SearchBar;

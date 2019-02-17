@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Gif extends Component {
-  handleClick = (event) => {
-    this.props.clickFunction(event.target.src.split('/')[4]);
-  }
-
-  render() {
-    const link = `https://media.giphy.com/media/${this.props.id}/giphy.gif`;
-    return (
-      <img src={link} alt="" className="gif" onClick={this.handleClick} />
-    );
-  }
-}
+const Gif = ({ id, clickFunction }) => {
+  const handleClick = event => clickFunction(event.target.src.split('/')[4]);
+  const link = `https://media.giphy.com/media/${id}/giphy.gif`;
+  // doesnt render component at page load
+  if (!id) { return null; }
+  return (
+    <img src={link} alt="" className="gif" onClick={handleClick} />
+  );
+};
 
 export default Gif;

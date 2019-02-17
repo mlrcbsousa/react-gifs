@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import giphy from 'giphy-api';
 
 // internal
-import SearchBar from './search_bar.jsx';
-import Gif from './gif.jsx';
-import GifList from './gif_list.jsx';
+import SearchBar from './search_bar';
+import Gif from './gif';
+import GifList from './gif_list';
 
 class App extends Component {
   constructor(props) {
@@ -12,13 +12,14 @@ class App extends Component {
 
     this.state = {
       gifs: [],
-      selectedId: "xT9IgDEI1iZyb2wqo8",
+      selectedId: null,
       formFocus: false
     };
   }
 
   focus = () => {
-    this.setState({ formFocus: !this.state.formFocus });
+    const { formFocus } = this.state;
+    this.setState({ formFocus: !formFocus });
   }
 
   search = (query) => {
@@ -29,22 +30,21 @@ class App extends Component {
     }, (error, response) => this.setState({ gifs: response.data }));
   }
 
-  click = (selectedId) => {
-    this.setState({ selectedId });
-  }
+  click = selectedId => this.setState({ selectedId });
 
   render() {
-    const classes = `left-scene${this.state.formFocus ? ' form-focus' : ''}`;
+    const { formFocus, selectedId, gifs } = this.state;
+    const classes = `left-scene${formFocus ? ' form-focus' : ''}`;
     return (
       <div>
         <div className={classes}>
           <SearchBar searchFunction={this.search} focusFunction={this.focus} />
           <div className="selected-gif">
-            <Gif id={this.state.selectedId} clickFunction={this.click} />
+            <Gif id={selectedId} clickFunction={this.click} />
           </div>
         </div>
         <div className="right-scene">
-          <GifList gifs={this.state.gifs} clickFunction={this.click} />
+          <GifList gifs={gifs} clickFunction={this.click} />
         </div>
       </div>
     );
